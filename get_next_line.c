@@ -3,85 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayelasef <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ayelasef <ayelasef@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 18:23:31 by ayelasef          #+#    #+#             */
-/*   Updated: 2024/11/18 19:38:23 by ayelasef         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:50:41 by ayelasef         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-int	found_newline(t_lsit *storage)
-{
-	int		i;
-	t_list	current;
-
-	if (storage == NULL)
-		return (0);
-	current = ft_lstlast(storage);
-	while(current->content[i])
-	{
-		if (current->content[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void ft_add_list(t_list **list, char*  buff)
-{
-	t_lsit	*new_node;
-	t_lsit	*last_node;
-
-	last_node = ft_lstlast(*list)
-	new_node = ft_lstnew(lst);
-	if (!new_node)
-		return ;
-	if (!last_node)
-		*lst = new_node;
-	else
-		last_node->content = new_node;
-
-	new_node->str_buff = buff;
-	new_node->next = NULL;
-}
-
-void	ft_read(int fd, t_lsit **list)
+static char	*ft_read(int fd, char *storage)
 {
 	char	*buff;
-	int		byte_read;
+	int		read_ptr;
 
-	while (!found_newline(*list) && read_ptr != 0)
+	read_ptr = 1;
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buff)
+		return (NULL);
+	while ((!storage || !ft_strchr(storage, '\n')) && read_ptr != 0)
 	{
-		buff = malloc(sizeof(char) * (BUFFER_SIZE + 1))
-			if (!buff)
-				return ;
 		read_ptr = read(fd, buff, BUFFER_SIZE);
-		if (!read_ptr)
+		if (read_ptr == -1)
 		{
+			free(storage);
 			free(buff);
-			return ;
+			return (NULL);
 		}
 		buff[read_ptr] = '\0';
-		ft_add_list(list, buff);
+		storage = ft_strjoin(storage, buff);
 	}
+	free(buff);
+	return (storage);
+}
+
+static char	*ft_line(char *storage)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	if (!storage[i])
+		return (NULL);
+	while (storage[i] != '\n' && storage[i] != '\0')
+		i++;
+	if (storage[i] == '\n')
+		i++;
+	line = ft_substr(storage, 0, i);
+	return (line);
+}
+
+static char	*ft_next_line(char *storage)
+{
+	char	*cpy;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (storage[i] != '\n' && storage[i])
+		i++;
+	if (!storage[i])
+		return (free(storage), NULL);
+	i++;
+	cpy = malloc(ft_strlen(storage) - i + 1);
+	if (!cpy)
+		return (NULL);
+	j = 0;
+	while (storage[i])
+		cpy[j++] = storage[i++];
+	cpy[j] = '\0';
+	free(storage);
+	return (cpy);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*storage;
-	char			*line;
-	int				bytes_read;
+	static char	*storage;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	bytes_read = 1;
-	storage = NULL;
-	line = NULL;
-	ft_read(fd, &storage);
-	if (storage == NULL)
+	storage = ft_read(fd, storage);
+	if (!storage)
 		return (NULL);
-	line = get_next(storage);
+	line = ft_line(storage);
+	storage = ft_next_line(storage);
 	return (line);
 }
