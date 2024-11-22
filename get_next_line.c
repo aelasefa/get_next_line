@@ -6,7 +6,7 @@
 /*   By: ayelasef <ayelasef@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 18:23:31 by ayelasef          #+#    #+#             */
-/*   Updated: 2024/11/21 13:50:41 by ayelasef         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:34:54 by ayelasef         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*ft_read(int fd, char *storage)
 	int		read_ptr;
 
 	read_ptr = 1;
-	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
 	while ((!storage || !ft_strchr(storage, '\n')) && read_ptr != 0)
@@ -82,8 +82,13 @@ char	*get_next_line(int fd)
 	static char	*storage;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (read(fd, 0, 0) == -1)
+	{
+		free(storage);
+		return (storage = NULL);
+	}
 	storage = ft_read(fd, storage);
 	if (!storage)
 		return (NULL);

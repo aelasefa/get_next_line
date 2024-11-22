@@ -6,7 +6,7 @@
 /*   By: ayelasef <ayelasef@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 17:04:46 by ayelasef          #+#    #+#             */
-/*   Updated: 2024/11/21 13:49:43 by ayelasef         ###   ########.fr       */
+/*   Updated: 2024/11/22 09:40:25 by ayelasef         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_strchr(char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i])
 	{
-		if (c == s[i])
-			return (i);
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
 		i++;
 	}
-	return (i);
+	return (NULL);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -44,7 +46,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s2)
 		return (NULL);
 	if (!s1)
-		return (ft_strdup(s2));
+	{
+		s1 = malloc(1);
+		s1[0] = '\0';
+	}
 	arr = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!arr)
 		return (free(s1), NULL);
