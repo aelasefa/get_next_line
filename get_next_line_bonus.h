@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayelasef <ayelasef@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ayelasef <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 17:07:36 by ayelasef          #+#    #+#             */
-/*   Updated: 2024/11/22 15:18:18 by ayelasef         ###   ########.fr       */
+/*   Created: 2024/11/22 15:18:16 by ayelasef          #+#    #+#             */
+/*   Updated: 2024/11/22 15:19:07 by ayelasef         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 200

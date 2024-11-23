@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayelasef <ayelasef@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ayelasef <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 18:23:31 by ayelasef          #+#    #+#             */
-/*   Updated: 2024/11/22 17:23:22 by ayelasef         ###   ########.fr       */
+/*   Created: 2024/11/22 14:44:09 by ayelasef          #+#    #+#             */
+/*   Updated: 2024/11/22 17:19:21 by ayelasef         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 static char	*ft_read(int fd, char *storage)
 {
@@ -72,7 +71,7 @@ static char	*ft_next_line(char *storage)
 	cpy = malloc(ft_strlen(storage) - i + 1);
 	if (!cpy)
 	{
-		free(storage);
+		free(cpy);
 		return (NULL);
 	}
 	j = 0;
@@ -85,20 +84,17 @@ static char	*ft_next_line(char *storage)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage;
+	static char	*storage[1024];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 1024)
 		return (NULL);
 	if (read(fd, 0, 0) == -1)
-	{
-		free(storage);
-		return (storage = NULL);
-	}
-	storage = ft_read(fd, storage);
-	if (!storage)
+		return (free(storage[fd]), storage[fd] = NULL);
+	storage[fd] = ft_read(fd, storage[fd]);
+	if (!storage[fd])
 		return (NULL);
-	line = ft_line(storage);
-	storage = ft_next_line(storage);
+	line = ft_line(storage[fd]);
+	storage[fd] = ft_next_line(storage[fd]);
 	return (line);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayelasef <ayelasef@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ayelasef <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 17:04:46 by ayelasef          #+#    #+#             */
-/*   Updated: 2024/11/22 12:36:34 by ayelasef         ###   ########.fr       */
+/*   Created: 2024/11/22 15:15:32 by ayelasef          #+#    #+#             */
+/*   Updated: 2024/11/22 15:16:16 by ayelasef         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
